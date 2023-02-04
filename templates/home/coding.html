@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %} Coding Profiles {% endblock title %}
+
+{% block coding %}active{% endblock coding %}
+
+{% block body %}
+
+<!-- Contact form -->
+<div class="container mt-4">
+    <h2 class="text-dark text-center text-uppercase text-light pt-3"> Coding Profile </h2>
+    <br />
+    <div class="row mb-1">
+      {% for coding in codings %}
+      <div class="col-md-3">
+        <div class="card flex-md-row mb-1 shadow-sm h-md-250 text-dark align-center" href="#" style="background-image: linear-gradient(#dbe9ff, #b3f6ff);">
+          <div
+            class="card-body d-flex flex-column align-items-center"
+            style="height: 250px; width:250px"
+          >
+            <h4 class="mb-3 ml-4 mt-0 font-weight-bold display-5 list-inline text-uppercase">
+              <a class="text-dark stretched-link" href="{{coding.link}}">
+                {{ coding.name }}
+              </a>
+            </h4>
+            <img src="/media/{{ coding.thumbnail }}" class="bd-placeholder-img card-img-right flex-auto d-lg-block border border-5 mb-auto" width="170" height="160"  style="object-fit: cover; object-position: center;"
+                aria-label="Placeholder: Thumbnail"/>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+ 
+    <h1 align="center" class="text-dark mt-5">Github Stats</h1>
+    <p align="center" class="mt-3 mb-4">
+      <img src="https://github-readme-stats.vercel.app/api?username=Akashmodi371&show_icons=true&locale=en&theme=radical" alt="canarygrapher" />
+      <img src="https://github-readme-streak-stats.herokuapp.com/?user=akashmodi371&theme=radical" class="mr-3" style="width:465px" alt="canarygrapher" />
+      <img src="https://github-readme-stats.vercel.app/api/top-langs?username=akashmodi371&show_icons=true&locale=en&layout=compact&theme=radical" alt="canarygrapher" />
+    </p>
+
+</div>
+{% endblock body %}
+

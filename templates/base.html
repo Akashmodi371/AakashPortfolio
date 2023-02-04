@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+  
+  <link rel="shortcut icon" href="{% static '/favico.png' %}" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title> Aakash Modi- {% block title %}{% endblock title %}</title>
+
+  {% block head %}{% endblock head %}
+</head>
+
+<body style="background:#7bc0d6">
+  <button onclick="topFunction()" id="myBtn" title="Go to top" style="display: none; position: fixed; bottom: 20px; 
+  right: 30px; z-index: 99; border: none; outline: none; background-color: black; color: white; cursor: pointer; padding: 15px;
+  border-radius: 30px; font-size: 18px;">Top</button>
+  <div class="header" style="position: fixed; top: 0; z-index: 1; width: 100%; background-color: #f1f1f1;">
+    <div class="progress-container" style="width: 100%; height: 4px; background: #ccc;">
+      <div class="progress-bar" id="myBar" style="height: 4px; background: #red; width: 0%;"></div>
+    </div>
+  </div>
+  <!-- Nav bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark text-bold" style="background:#262b3d">
+    <a class="navbar-brand" href="/"> AM </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto">
+
+        <li class="nav-item {% block homeactive %}{% endblock homeactive %}">
+          <a class="nav-link" href="/"> Home <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item {% block projectsactive %}{% endblock projectsactive %}">
+          <a class="nav-link" href="/projects"> Projects </a>
+        </li>
+
+        <li class="nav-item {% block blogactive %}{% endblock blogactive %}">
+          <a class="nav-link" href="/blog"> Blog </a>
+        </li>
+
+        <li class="nav-item {% block contactactive %}{% endblock contactactive %}">
+          <a class="nav-link" href="/contact"> Contact </a>
+        </li>
+
+        <li class="nav-item {% block coding %}{% endblock coding %}">
+          <a class="nav-link" href="/coding"> Coding-Profile </a>
+        </li>
+
+      </ul>
+
+
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+            Welcome {{request.user}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/logout"> Logout</a>
+            {% if user.is_authenticated %}
+            <a class="dropdown-item" href="/profile"> Edit profile </a>
+            {% endif %}
+            {% if user.is_staff %}
+            <a class="dropdown-item" href="/blog/newpost"> New Post </a>
+            <a class="dropdown-item" href="/newproject"> New Project </a>
+            <a class="dropdown-item" href="/admin"> Admin settings </a>
+            {% endif %}
+
+          </div>
+
+        </li>
+      </ul>
+
+
+      {% else %}
+      <a class="login_button nav-link" data-toggle="modal" data-target="#login_modal" name="login_button"
+        id="login_button"> Login </a>
+      {% endif %}
+      <style>
+        #login_button:hover {
+          color: white;
+          text-decoration: none;
+        }
+
+        #login_button {
+          color: grey;
+          text-decoration: none;
+        }
+      </style>
+
+    </div>
+  </nav>
+
+
+  <!-- Alert messages -->
+  {% for message in messages %}
+  <div class="alert alert-{{ message.extra_tags.0 }} alert-dismissible fade show mb-0" role="alert">
+    <strong>{{ message.extra_tags.1 }}</strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+
+
+  <!--  Login Modal -->
+  <div class="modal fade" id="login_modal" tabindex="-1" aria-labelledby="login_modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title w-100 text-center" id="exampleModalLabel"> Login </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form method="post" action="/login" name="login_form" id="login_form"> {% csrf_token %}
+
+            <div class="form-group">
+              <div class="form-group">
+                <label for="name"> Username </label>
+                <input type="text" class="form-control" id="login_username" name="login_username" placeholder="Username" required>
+              </div>
+
+              <div class="form-group">
+                <label for="password"> Password </label>
+                <input type="password" class="form-control" id="login_password" name="login_password" placeholder="Password"
+                  required>
+              </div>
+
+          </form>
+        </div>
+        <div class="modal-footer align-items-center">
+          <button type="submit" class="btn btn-primary" form="login_form"> Login </button>
+          <a class="signup_link" data-toggle="modal" data-target="#signup_modal" name="signup_link" id="signup_link"
+            data-dismiss="modal" aria-label="Close"> Sign up </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <!--  Sign-up Modal -->
+  <div class="modal fade" id="signup_modal" tabindex="-1" aria-labelledby="signup_modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title w-100 text-center" id="exampleModalLabel"> Sign-up </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form method="post" action="/signup" name="signup_form" id="signup_form"> {% csrf_token %}
+
+            <div class="form-group">
+              <label for="first_name"> First Name </label>
+              <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" maxlength="50"
+                required>
+            </div>
+
+            <div class="form-group">
+              <label for="last_name"> Last Name </label>
+              <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" maxlength="50"
+                required>
+            </div>
+
+            <div class="form-group">
+              <label for="name"> Userame </label>
+              <input type="text" class="form-control" id="signup_username" name="signup_username" placeholder="Username"
+                maxlength="25" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email"> Email </label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="password"> Password </label>
+              <input type="password" class="form-control" id="signup_password" name="signup_password" placeholder="Password"
+                onkeyup="validatePassword();" onchange="validatePassword();" minlength="4" required>
+            </div>
+
+            <div class="form-group">
+              <label for="confirm_password"> Confirm Password </label>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                placeholder="Confirm Password" onkeyup="validatePassword();" onchange="validatePassword();" required>
+              <span id="check_password"> </span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer align-items-center">
+          <button type="submit" class="btn btn-primary" form="signup_form" id="signup_button" disabled> Sign up </button>
+          <a class="signup_link" data-toggle="modal" data-target="#login_modal" name="login_link" id="login_link"
+            data-dismiss="modal" aria-label="Close"> Login </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% block body %}{% endblock body %}
+  {% block js %}{% endblock js %}
+
+  <!-- Optional JavaScript; choose one of the two! -->
+  <script>
+    function validatePassword() {
+      password = document.getElementById("signup_password"),
+        confirm_password = document.getElementById("confirm_password");
+      if (password.value != confirm_password.value) {
+        document.getElementById("check_password").innerHTML = `<p style="color: red;font-size: small;"> Passwords do not match! </p>`
+        document.getElementById("signup_button").disabled = true;
+      } else {
+        document.getElementById("check_password").innerHTML = `<p style="color: green;font-size: small;"> Passwords match </p>`
+        document.getElementById("signup_button").disabled = false;
+      }
+    }
+
+    window.onscroll = function() {myFunction()};
+
+    function myFunction() {
+      var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = (winScroll / height) * 100;
+      document.getElementById("myBar").style.width = scrolled + "%";
+    }
+
+
+    let mybutton = document.getElementById("myBtn");
+
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    function topFunction() {
+      document.body.scrollTop = 0; 
+      document.documentElement.scrollTop = 0; 
+    }
+
+
+
+
+  </script>
+
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"></script>
+    
+
+</body>
+
+</html>

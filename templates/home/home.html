@@ -1,0 +1,131 @@
+{% extends 'base.html' %} 
+{% block title %} Home {% endblock title %} 
+{% block homeactive %} active{% endblock homeactive %} 
+{% block body %} 
+{% load static %}
+
+<!-- Main profile -->
+<div class="jumbotron" name="Aakash" style="background: #1f2132; color:white">
+  {% for detail in homedetail %}
+  <div class="container my-4" style="position: inherit;">
+    <div class="col-md-4 col-sm-4">
+      <i class="fab fa-whatsapp fa-2x" style="color: #25d366;"></i>
+      <h1 align="center" style="font-family: 'Berkshire Swash', cursive;">{{detail.name}}</h1>
+    </div>
+    {% comment %} <hr class="my-3" /> {% endcomment %}
+    <div class="row">
+      <div class="col-md-5 col-sm-5">
+        <img class="rounded-circle mt-4"
+          src="/media/{{ detail.profilepic }}"
+          width="350px"
+          height="70%"
+          style="object-fit: contain; vertical-align: middle;"
+        />
+      </div>
+      <div class="col-md-7 col-sm-7" style="font-family:timesroman;">
+        <P class='mb-5' >
+          <h4>Hi,</h4>
+          {{detail.description}}<br>
+          I am also coding enthusiast geek. With a Stronghold over Data Structures and Algorithms. 
+          I am Competitive Programmer active on <a href="https://leetcode.com/Akashmodi371/">Leetcode</a>, and <a href="https://www.codechef.com/users/akash9026"> Codechef</a> and <a href="https://codeforces.com/profile/login">Codeforces</a>
+          I'm graduating in June 2023 and I'm interested in full-time Software Developer/Engineer 
+          roles. 
+          Please Feel free to get in touch with me via email at <a href = "mailto: Akashmodi371@gmail.com"> <b>Akashmodi371@gmail.com</b> </a> or you can <a href="/contact">contact</a><br></br>
+          <div class="col-md-5 col-sm-5">
+            {% comment %} <img class=""
+              src="{% static 'home/Linkedin.png' %}"
+              width="30px"
+              height="30px"
+              style="object-fit: contain"
+            /> {% endcomment %}
+          </div>
+          <a
+          class="btn btn-lg position-absolute"
+          href="https://www.linkedin.com/in/sdeaakashmodi/"
+          target="_blank"
+          role="button"
+          style="margin:2px 0px; width: 100px; height:40px; background:#0a66c2; color:white; inline:block ; "
+        ><h5 class="text-bold">Linkedin</h5></a>
+        </P>
+        <a
+          class="btn btn-md position-absolute"
+          href="{{detail.resumelink}}"
+          target="_blank"
+          role="button"
+          style="margin:60px 0px; width: 150px; background:white; color:black; inline:block ; "
+        >
+          Download Resume
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>; 
+
+<br />
+
+
+
+
+<!-- Project display -->
+<div class="container" style="background: #1f2132;">
+  <h2 class='text-center text-uppercase text-light pt-3' style="font-family:lora">Check Out My Projects</h2>
+  <br />
+  <div class="row mb-1">
+    {% for project in projects %}
+    <div class="card mb-3 mr-4 ml-4" style="width: 18rem; background-image: linear-gradient(#dbe9ff, #b3f6ff);">
+      <img src="/media/{{ project.thumbnail }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ project.name }}</h5>
+        <p class="card-text">{{ project.desc|safe|slice:":150"}}</p>
+        <a href="{{project.link}}" class="btn btn-primary">Project Link</a>
+        <a href="{{project.githublink}}" class="btn btn-primary">Source Code</a>
+      </div>
+      <div class="card-footer bg-dark">
+        <small class="text-light"></small>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="/projects"> See more projects </a>
+</div>
+
+<br />
+<hr class="my-4" />
+
+<!-- Blog display -->
+<div class="container" style="background: #1f2132;">
+  <h2 class='text-center text-bold text-light text-uppercase' style="font-family:lora">Check out my popular blogs</h2>
+  <br />
+  <div class="row mb-2 ">
+    {% for post in posts %}
+    <div class="col">
+      <div class="card flex-md-row mb-4 shadow-sm h-md-250" href="#" style="background-image: linear-gradient(#dbe9ff, #b3f6ff);">
+        <div class="card-body d-flex flex-column align-items-start" style="background-image: linear-gradient(#dbe9ff, #b3f6ff);">
+          <h3 class="mb-0">
+            <a class="text-dark" href="blog/{{post.slug}}">
+              {% if post.title|length > 76 %} {{ post.title|truncatechars:76 }}
+              {% else %} {{post.title}} {% endif %}
+            </a>
+          </h3>
+          <div class="mb-1 mt-2 ml-1 text-dark">{{ post.upload_date|date:"M d, Y"}}</div>
+          <p class="card-text mb-auto text-dark"></p>
+          <a href="blog/{{post.slug}}" class='text-dark text-bold'>Continue reading -></a>
+        </div>
+        <img
+          src="/media/{{ post.thumbnail }}"
+          class="bd-placeholder-img card-img-right flex-auto d-lg-block"
+          width="200"
+          height="200"
+          style="object-fit:cover; object-position: center; background-image: linear-gradient(#dbe9ff, #b3f6ff);"
+          aria-label="Placeholder: Thumbnail"
+        />
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="blog/"> See more </a>
+</div>
+<br /><br />
+
+{% endblock body %}

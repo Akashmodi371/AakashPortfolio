@@ -236,8 +236,9 @@
         document.getElementById("signup_button").disabled = false;
       }
     }
+    let mybutton = document.getElementById("myBtn");
 
-    window.onscroll = function() {myFunction()};
+    window.onscroll = function() {myFunction(), scrollFunction()};
 
     function myFunction() {
       var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -245,11 +246,6 @@
       var scrolled = (winScroll / height) * 100;
       document.getElementById("myBar").style.width = scrolled + "%";
     }
-
-
-    {% comment %} let mybutton = document.getElementById("myBtn");
-
-    window.onscroll = function() {scrollFunction()};
 
     function scrollFunction() {
       if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -262,7 +258,7 @@
     function topFunction() {
       document.body.scrollTop = 0; 
       document.documentElement.scrollTop = 0; 
-    } {% endcomment %}
+    } 
 
 
 

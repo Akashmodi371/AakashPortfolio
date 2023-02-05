@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-ity2s$ud%!s)qfvk%ylbukvc#xakj1v^hr+xxq3ui#0@#1hszy
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://portfolio-sde-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://aakashportfolio-production.up.railway.app']
 
 # Application definition
 

@@ -109,8 +109,8 @@
             </a>
           </h3>
           <div class="mb-1 mt-2 ml-1 text-dark">{{ post.upload_date|date:"M d, Y"}}</div>
-          <p class="card-text mb-auto text-dark"></p>
-          <a href="blog/{{post.slug}}" class='text-dark text-bold'>Continue reading -></a>
+          <p class="card-text mb-auto fw-bold">{{post.desc}}</p>
+          <a href="blog/{{post.slug}}" class='text-danger text-bold'>Continue reading -></a>
         </div>
         <img
           src="/media/{{ post.thumbnail }}"
